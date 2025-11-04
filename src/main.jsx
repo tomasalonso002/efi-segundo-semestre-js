@@ -8,15 +8,12 @@ import 'primeicons/primeicons.css';
 import "react-toastify/dist/ReactToastify.css"
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
-import { AuthProvider } from './context/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
       <BrowserRouter>
         <App />
         <ToastContainer position='top-righ' autoClose={1500} />
       </BrowserRouter>
-    </AuthProvider>
-  </StrictMode>,
+  </StrictMode>
 )

@@ -67,7 +67,7 @@ const NewPost =()=>{
                             />
                         </div>
                         <Button type="submit" label={isSubmitting ? "Creando post...":"Crear Post"}/>
-                        <Button type="button" label="volver" onClick={() => navigate('/')} />
+                        <Button type="button" label="volver" onClick={() => navigate('/homeinside')} />
                     </Form>
                 )}
 

@@ -41,7 +41,7 @@ const LoginForm=()=>{
             setToken(jwtToken)
             toast.success('Inicio de sesion exitoso')
             resetForm()
-            setTimeout(()=>navigate('/'),2000)
+            setTimeout(()=>navigate('/homeinside'),2000)
             return true
         } catch (error) {
             toast.error("Hubo un error en el servidor", error)
@@ -69,6 +69,7 @@ const LoginForm=()=>{
                             <ErrorMessage name='password' component='small' className="error"/>
                        </div>
                        <Button type="submit" label={isSubmitting ? "Iniciando....": "Iniciar Sesion"} />
+                        <Button type="button" label="volver" onClick={() => navigate('/homeoutside')} />
                     </Form>
                 )}
             </Formik>

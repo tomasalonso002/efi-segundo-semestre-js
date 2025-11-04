@@ -29,7 +29,7 @@ const RegisterForm =()=>{
             if (response.ok){
                 toast.success("Usuario registrado con exito")
                 resetForm()
-                setTimeout(()=>navigate('/'),2000)
+                setTimeout(()=>navigate('/login'),1500)
             }else{
                 toast.error("Hubo un error al registrar el usuario")
             }
@@ -65,7 +65,7 @@ const RegisterForm =()=>{
                             <ErrorMessage name='password' component='small' className="error"/>
                         </div>
                         <Button type="submit" label={isSubmitting ? "Registrando...": "Registrarse"}/>
-                        <Button type="button" label="volver" onClick={() => navigate('/')} />
+                        <Button type="button" label="volver" onClick={() => navigate('/homeoutside')} />
                     </Form>
                 )}
             </Formik>

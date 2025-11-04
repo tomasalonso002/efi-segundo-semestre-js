@@ -7,8 +7,6 @@ import { InputText } from "primereact/inputtext"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 
-import { AuthContext } from "../context/AuthContext"
-
 const validationSchema = Yup.object({
     name: Yup.string().required('El nombr es obligatorio'),
     email: Yup.string().email('Email invalido').required('El email es obligatorio'),

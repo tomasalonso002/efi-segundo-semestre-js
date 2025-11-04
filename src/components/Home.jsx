@@ -12,6 +12,7 @@ const Home=()=>{
             <div className="button-container">
             <Button label="Iniciar Sesion" onClick={()=>navigate('/login')}/>
             <Button label="Registrarse" onClick={()=>navigate('/registrarse')}/>
+            <Button label="NewPost" onClick={()=>navigate('/post')}/>
             </div>
         </Fragment>
         </div> 

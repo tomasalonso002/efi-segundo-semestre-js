@@ -7,6 +7,8 @@ import { InputText } from "primereact/inputtext"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 
+import "../../style/RegisterForm.css"
+
 const validationSchema = Yup.object({
     name: Yup.string().required('El nombr es obligatorio'),
     email: Yup.string().email('Email invalido').required('El email es obligatorio'),
@@ -40,8 +42,8 @@ const RegisterForm =()=>{
     
     return(
         
-        <div className="register-container">
-            <h2>Crea una cuenta</h2>
+        <div>
+            <Button className="register-button" type="button" label="volver" onClick={() => navigate('/')} />
             <Formik 
                 initialValues={{ name: "", email: "", role: "user", password: "" }}
                 validationSchema={validationSchema}
@@ -49,23 +51,26 @@ const RegisterForm =()=>{
             >
                 {({isSubmitting}) =>(
                     <Form className="register-form">
-                        <div className="form-field">
-                            <label>Nombre</label>
-                            <Field as={InputText} id='name' name='name' />
-                            <ErrorMessage name='name' component='small' className="error"/>
+                        <div className="container-register">
+                            <h2>Crea una cuenta Klick </h2>
+                            <div className="form-field">
+                                <label>Nombre</label>
+                                <Field as={InputText} id='name' name='name' placeholder='Tomas Alonso' />
+                                <ErrorMessage name='name' component='small' className="error"/>
+                            </div>
+                            <div className="form-field">
+                                <label>Email</label>
+                                <Field as={InputText} id='email' name='email' placeholder='tomas@gmail.com' />
+                                <ErrorMessage name='email' component='small' className="error"/>
+                            </div>
+                            <div className="form-field">
+                                <label>Contraseña</label>
+                                <Field as={InputText} id='password' name='password' type='password' placeholder='**********' />
+                                <ErrorMessage name='password' component='small' className="error"/>
+                            </div>
+                            
+                            <Button className="register-button" type="submit" label={isSubmitting ? "Registrando...": "Registrarse"}/>
                         </div>
-                        <div className="form-field">
-                            <label>Email</label>
-                            <Field as={InputText} id='email' name='email' />
-                            <ErrorMessage name='email' component='small' className="error"/>
-                        </div>
-                        <div className="form-field">
-                            <label>Contraseña</label>
-                            <Field as={InputText} id='password' name='password' />
-                            <ErrorMessage name='password' component='small' className="error"/>
-                        </div>
-                        <Button type="submit" label={isSubmitting ? "Registrando...": "Registrarse"}/>
-                        <Button type="button" label="volver" onClick={() => navigate('/homeoutside')} />
                     </Form>
                 )}
             </Formik>

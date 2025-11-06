@@ -60,16 +60,16 @@ const LoginForm=()=>{
                     <Form className="register-form">
                        <div className="form-field">
                             <label>Email</label>
-                            <Field as={InputText} id='email' name='email'/>
+                            <Field as={InputText} id='email' name='email' placeholder='tomas@gmail.com'/>
                             <ErrorMessage name='email' component='small' className="error"/>
                        </div>
                        <div className="form-field">
                             <label>Contraseña</label>
-                            <Field as={InputText} id='password' name='password' type='password'/>
+                            <Field as={InputText} id='password' name='password' type='password' placeholder='*********'/>
                             <ErrorMessage name='password' component='small' className="error"/>
                        </div>
                        <Button type="submit" label={isSubmitting ? "Iniciando....": "Iniciar Sesion"} />
-                        <Button type="button" label="volver" onClick={() => navigate('/homeoutside')} />
+                        <Button type="button" label="volver" onClick={() => navigate('/')} />
                     </Form>
                 )}
             </Formik>

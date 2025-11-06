@@ -1,0 +1,30 @@
+.post-container{
+    border: 2px solid rgb(253, 253, 253);
+    height: auto;
+    width: 350px;
+    margin-bottom:30px;
+    padding: 30px;
+    text-align: center;
+}
+
+
+.title-page-miperfil{
+    text-shadow: grey 1px 1px;
+    font-size: 70px;
+    width: 1500px;
+    text-align: center;
+}
+.subtitle-page-miperfl{
+    font-size: 50px;
+    color: grey;
+    text-align: center;
+}
+.posts-contaner{
+  display: flex;
+  justify-content: center; 
+  height: 300px;          
+}
+
+.button{
+    font-size: 20px;
+}

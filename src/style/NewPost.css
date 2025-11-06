@@ -1,0 +1,24 @@
+.container-form {
+  display: flex;
+  flex-direction: column; /* una arriba de otra */
+  justify-content: center; /* centrado vertical */
+  align-items: center;     /* centrado horizontal */
+  height: 500px;
+  width: 700px;
+}
+
+.post-form {
+  font-size: 20px;
+  width: 250px;
+  margin-bottom: 15px; /* separa un poco del botón */
+}
+
+.post-form-button {
+  font-size: 20px;
+  width: 50%;
+}
+.error{
+    color: red;
+
+}
+

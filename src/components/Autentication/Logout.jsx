@@ -8,7 +8,7 @@ const useLogout = () => {
     const logout = ()=> {
         localStorage.removeItem("token")
         toast.info("Sesion Cerrada")
-        setTimeout(()=>navigate('/homeoutside'),2000)
+        setTimeout(()=>navigate('/'),2000)
     }
     return logout
 }

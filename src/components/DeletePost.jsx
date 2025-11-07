@@ -1,6 +1,6 @@
 const DeletePost = async (id, token) => {
   try {
-    const res = await fetch(`http://127.0.0.1:5000/posts/${id}`, {
+    const res = await fetch(`http://127.0.0.1:5000/post/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

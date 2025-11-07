@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-
+import { useContext } from "react"
 import HomeOutside from "./components/HomeOutside"
 import HomeInside from "./components/HomeInside"
 import RegisterForm from "./components/Autentication/RegisterForm"
@@ -8,8 +8,9 @@ import NewPost from "./components/NewPost"
 import MiPerfil from "./components/MiPerfil"
 import PrivateRoute from "./components/ProteccionRutas"
 import Posts from "./components/Posts"
+import { AuthContext } from "./Context/AuthContext"
 function App() {
-
+  
   return (
     <>
     <Routes>

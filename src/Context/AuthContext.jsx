@@ -3,7 +3,7 @@
 import React,  { createContext, CreateContext, useEffect, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
 import { toast } from 'react-toastify'
-
+import { useNavigate } from 'react-router-dom'
 export const AuthContext = createContext()
 
     
@@ -11,25 +11,21 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) =>{
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
-
+    const navigate = useNavigate()
     useEffect(()=>{
         const storedToken = localStorage.getItem('token')
         if(storedToken){
             try {
                 const decoded = jwtDecode(storedToken)
-                if(decoded.expires_delta * 1000 > Date.now()){
-                    setUser(decoded)
-                    setToken(storedToken)
-                }else{
-                    localStorage.removeItem('token')
-                }
+                setUser(decoded)
+                setToken(storedToken)
             } catch (error) {
                 toast.error('Token invalido', error)
                 localStorage.removeItem('token')
             }
         }
     },[])
-
+    
     const login = async (email, password) => {
         try {
             const response = await fetch('http://127.0.0.1:5000/login',{
@@ -40,7 +36,7 @@ export const AuthProvider = ({ children }) =>{
             if(!response.ok) return toast.error('Credenciales incorrectas')
 
             const data = await response.json()
-            const jwtToken = data.token
+            const jwtToken = data.access_token
 
             if(!jwtToken)return toast.error('No se recibio el token')
 
@@ -51,15 +47,17 @@ export const AuthProvider = ({ children }) =>{
             setToken(jwtToken)
 
             toast.success('Inicio de sesion exitoso')
+            setTimeout(()=>navigate('/homeinside'),2000)
             return true
         } catch (error) {
             toast.error('Hubo un error al iniciar sesion', error.message)
             return false
         }
     }
-
+    console.log(user);
+    
     return(
-        <AuthContext.Provider value={(user, token, login)} >
+        <AuthContext.Provider value={{user, token, login}} >
             {children}
         </AuthContext.Provider>
     )

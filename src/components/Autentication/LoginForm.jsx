@@ -5,44 +5,21 @@ import { InputText } from "primereact/inputtext"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import { jwtDecode } from "jwt-decode"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { AuthContext } from "../../Context/AuthContext"
 const validationSchema = Yup.object({
     email: Yup.string().email('Email invalido').required('El email es obligatorio'),
     password: Yup.string().required('La contraseña es obligatoria')
 })
 
 const LoginForm=()=>{
-
-    const [user, setUser] = useState(null)
-    const [token, setToken] = useState(null)
-    
+    const {login} = useContext(AuthContext)
+        
     const navigate = useNavigate()
     const handleSubmit = async (values, { resetForm }) =>{
         try {
-            const response = await fetch ('http://127.0.0.1:5000/login',{
-                method:'POST',
-                headers: {"Content-Type":"application/json"},
-                body : JSON.stringify(values)
-            })
-
-            if(!response.ok){
-                return toast.error("Hubo un error al iniciar sesion")
-            }
-
-            const data = await response.json()
-            const jwtToken = data.access_token
-            if (!jwtToken){
-                return toast.error('No se recibio Token')
-            }
-        
-            localStorage.setItem('token', jwtToken)
-            const decoded = jwtDecode(jwtToken)
-            setUser(decoded)
-            setToken(jwtToken)
-            toast.success('Inicio de sesion exitoso')
+            login(values.email, values.password)
             resetForm()
-            setTimeout(()=>navigate('/homeinside'),2000)
-            return true
         } catch (error) {
             toast.error("Hubo un error en el servidor", error)
             return false

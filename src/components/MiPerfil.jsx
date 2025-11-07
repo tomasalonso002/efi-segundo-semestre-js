@@ -1,47 +1,58 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useContext} from "react"
 import { Button } from "primereact/button"
 import { useNavigate } from "react-router-dom"
-import InfoToken from "./InfoToken"
 import { toast } from "react-toastify"
-
+import { AuthContext } from "../Context/AuthContext";
+import DeletePost from "./DeletePost";
 import "../style/Post.css"
 
 const MiPerfil = () => {
     const navigate = useNavigate()
-    const info = InfoToken()
     const [posts, setPosts] = useState([])
+    const {user,token} = useContext(AuthContext)
+    
+    const fetchPosts = async ()=>{
+        try{
+            const res = await fetch('http://127.0.0.1:5000/my_posts',{
+                method:"GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+            if(!res.ok) throw new Error ("Error al obtener el post")
+            const data = await res.json()
+            setPosts(data)
+        }catch(error){
+            toast.error(error)
+        }
+    }
 
     useEffect(()=>{
-        if(!info) return;
-
-        const fetchPosts = async ()=>{
-            try{
-                const res = await fetch('http://127.0.0.1:5000/my_posts',{
-                    method:"GET",
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                })
-                
-                if (!res.ok) throw new Error("Error al obtener el post")
-                
-                const data = await res.json()
-                setPosts(data)
-            }catch(error){
-                toast.error(error)
-            }
-        }
+        if(user){
         fetchPosts()
-    }, [info])
+        }
+    },[user])
 
+    
+
+    const handleDelete = async (id) => {
+        try {
+            await DeletePost(id, token)
+            setPosts(posts.filter((p) => p.id !== id))
+            toast.success("Post eliminado correctamente")
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+    console.log(user)
 
 return(
     <div>
-        <Button className="button" type="submit" label="Volver al Inicio" onClick={()=>navigate('/homeinside')}/>
-        <h2 className="title-page-miperfil">Tu muro "{info.name}"</h2>
+        <Button className="post-form-button" type="button" label="volver" onClick={() => (user.role === 'user' ? navigate('/homeinside') : navigate('/homeinsideadminmod') )} />
+        <h2 className="title-page-miperfil">Tu muro"{user?.name}"</h2>
         <h3 className="subtitle-page-miperfl">Tus Posteos</h3>
-
-        {posts.length === 0 ? (
+        
+        {posts?.length === 0 ? (
             <p>No tenes publicaciones realizadas</p>
         ) : <div  className="posts-contaner">
             <ul>
@@ -52,7 +63,7 @@ return(
                     <p>{p.created_at}</p>
                     <p>{p.category.type_category}</p>
                     <div className="button-post-conteiner">
-                        <Button className="button" type="submit" label="Eliminar"/>
+                        <Button label="Eliminar" severity="danger" onClick={() => handleDelete(p.id)}/>
                         <Button className="button" type="submit" label="Editar"/>
                     </div>
                 </div>

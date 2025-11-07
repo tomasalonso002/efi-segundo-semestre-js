@@ -7,7 +7,7 @@ import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
-
+import InfoToken from "./InfoToken"
 import SelectCategorias from "./SelectCategorias"
 
 import "../style/NewPost.css"
@@ -22,6 +22,7 @@ const validationSchema = Yup.object({
 
 const NewPost =()=>{
     const navigate = useNavigate()
+    const info_toke = InfoToken()
     const token = localStorage.getItem("token")
     const handleSubmit = async (values, { resetForm }) => {
         try{
@@ -33,7 +34,11 @@ const NewPost =()=>{
             if (response.ok){
                 toast.success("Post creado correctamente")
                 resetForm()
-                setTimeout(()=>navigate('/homeinside'),2000)
+                if(info_toke.role === 'user'){
+                    setTimeout(()=>navigate('/homeinside'),2000)
+                }else{
+                setTimeout(()=>navigate('/homeinsideadminmod'),2000)
+                }
             }else{
                 toast.error("Hubo un errore")
             }
@@ -44,7 +49,7 @@ const NewPost =()=>{
     }
     return(
         <div >
-             <Button className="post-form-button" type="button" label="volver" onClick={() => navigate('/homeinside')} />
+             <Button className="post-form-button" type="button" label="volver" onClick={() => (info_toke.role === 'user' ? navigate('/homeinside') : navigate('/homeinsideadminmod') )} />
             
             <Formik
                 initialValues={{title:"", content: "", category_id:""}}

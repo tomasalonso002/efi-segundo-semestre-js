@@ -47,14 +47,19 @@ export const AuthProvider = ({ children }) =>{
             setToken(jwtToken)
 
             toast.success('Inicio de sesion exitoso')
-            setTimeout(()=>navigate('/homeinside'),2000)
+            if(decoded.role === "admin" || decoded.role === "moderador"){
+                setTimeout(()=>navigate('/homeinsideadminmod'),1500)
+                return true
+            }
+
+            setTimeout(()=>navigate('/homeinside'),1500)
             return true
+    
         } catch (error) {
             toast.error('Hubo un error al iniciar sesion', error.message)
             return false
         }
     }
-    console.log(user);
     
     return(
         <AuthContext.Provider value={{user, token, login}} >

@@ -12,7 +12,7 @@ const SelectCategorias = ({value, onChange})=>{
                     headers: {"Content-Type":"application/json"}
                 })
                 if (!response.ok){
-                    throw new Error("Eroor al obtener las categorias")
+                    throw new Error("Error al obtener las categorias")
                 }
                 const data = await response.json()
                 setCategorias(data)

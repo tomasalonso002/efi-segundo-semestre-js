@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-import { useContext } from "react"
+
 import HomeOutside from "./components/HomeOutside"
 import HomeInside from "./components/HomeInside"
 import RegisterForm from "./components/Autentication/RegisterForm"
@@ -8,7 +8,10 @@ import NewPost from "./components/NewPost"
 import MiPerfil from "./components/MiPerfil"
 import PrivateRoute from "./components/ProteccionRutas"
 import Posts from "./components/Posts"
-import { AuthContext } from "./Context/AuthContext"
+import HomeInsideAdminMod from "./components/HomeInsideAdmMod"
+import NewCategory from "./components/categories"
+import PrivateRouteRole from "./components/ProteccionRutasRol"
+
 function App() {
   
   return (
@@ -23,7 +26,9 @@ function App() {
       <Route path="/homeinside" element={<PrivateRoute><HomeInside/></PrivateRoute>}/>
       <Route path="/miperfil" element={<PrivateRoute><MiPerfil/></PrivateRoute>}/>
       <Route path="/posteos" element={<PrivateRoute><Posts/></PrivateRoute>}/>
-    
+
+      <Route path="/homeinsideadminmod" element={<PrivateRouteRole><HomeInsideAdminMod/></PrivateRouteRole>}/>
+      <Route path="/nuevacategoria" element={<PrivateRouteRole><NewCategory/></PrivateRouteRole>}/>
     </Routes>
     
     </>

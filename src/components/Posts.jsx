@@ -34,7 +34,6 @@ const fetchPosts = async () =>{
     },[user])
 
     const handleDelete = async (id) => {
-         const token = localStorage.getItem("token")
         try {
             await DeletePost(id, token)
             setPosts(posts.filter((p) => p.id !== id))
@@ -46,6 +45,9 @@ const fetchPosts = async () =>{
     
 return(
     <div>
+        
+        <Button className="post-form-button" type="button" label="volver" onClick={() => (user.role === 'user' ? navigate('/homeinside') : navigate('/homeinsideadminmod') )} />
+        
         {posts?.length === 0 ? (
             <p>No hay publicaciones realizadas</p>
         ) : <div>
@@ -56,10 +58,15 @@ return(
                     <p>{p.content}</p>
                     <p>{p.created_at}</p>
                     <p>{p.category.type_category}</p>
-                    {user?.role === "admin" && ( 
-                    <Button label="Eliminar" severity="danger" onClick={() => handleDelete(p.id)}/>,
+                    
+                    {user?.role === "admin" && (
+                    <div> 
+                    <Button label="Eliminar" severity="danger" onClick={() => handleDelete(p.id)}/>
                     <Button label="Editar"  />
+                    </div>
                     )}
+                    
+                    <Button label="Comentar"  />
                 </li>
                     ))}
             </ul>

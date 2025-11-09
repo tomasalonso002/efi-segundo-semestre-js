@@ -5,6 +5,10 @@ import { toast } from "react-toastify";
 import DeletePost from "./DeletePost";
 import { AuthContext } from "../Context/AuthContext";
 
+import PostComments from "./PostComments";
+import NewComment from "./NewComment";
+import "../style/Post.css"
+
 const Posts = () => {
     const navigate = useNavigate()
     const [posts, setPosts] = useState([])
@@ -50,29 +54,28 @@ return(
         
         {posts?.length === 0 ? (
             <p>No hay publicaciones realizadas</p>
-        ) : <div>
+        ) : <div className="posts-contaner">
             <ul>
                {[...posts]?.reverse().map((p)=>(
-                <li>
+                <div className="post-container">
                     <h2>{p.title}</h2>
                     <p>{p.content}</p>
                     <p>{p.created_at}</p>
                     <p>{p.category.type_category}</p>
                     
-                    {user?.role === "admin" && (
-                    <div> 
-                    <Button label="Eliminar" severity="danger" onClick={() => handleDelete(p.id)}/>
-                    <Button label="Editar"  />
+                    {(user?.role === "admin" || user.id == p.user_id || user.role === "moderador") && (
+                    <div className="button-post-conteiner"> 
+                        <Button label="Eliminar" severity="danger" onClick={() => handleDelete(p.id)}/>
+                        {user.role !== 'moderador' ? (<Button label="Editar" severity="danger"/>):null}
                     </div>
                     )}
-                    
-                    <Button label="Comentar"  />
-                </li>
-                    ))}
+                    <PostComments postId={p.id} token={token} />
+                    <NewComment id={p.id}/>
+                </div>
+            ))}
             </ul>
             </div>
         }
-
     </div>
 )}
 export default Posts

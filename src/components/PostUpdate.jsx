@@ -1,5 +1,5 @@
-import { Formik, Form, Field,ErrorMessage } from "formik"
-import * as Yup from'yup'
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from 'yup'
 
 import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
@@ -10,28 +10,24 @@ import { AuthContext } from "../Context/AuthContext"
 
 import SelectCategorias from "./SelectCategorias"
 
-import "../style/NewPost.css"
-
-const validationSchema = Yup.object({
+const validationSchema= Yup.object({
     title: Yup.string().required('El titulo es obligatorio'),
     content: Yup.string().required('El contenido es obligatorio'),
     category_id: Yup.number().required('La categoria es obligatoria')
 })
 
-
-
-const NewPost =()=>{
+const EditPost = ()=>{
     const navigate = useNavigate()
     const {token,user} = useContext(AuthContext)
     const handleSubmit = async (values, { resetForm }) => {
         try{
-            const res = await fetch ('http://127.0.0.1:5000/post', {
-                method:'POST',
+            const res = await fetch (`http://127.0.0.1:5000/post/${id}`, {
+                method:'PUT',
                 headers: {"Content-Type":"application/json", "Authorization": `Bearer ${token}`},
                 body : JSON.stringify(values)
             })
             if (res.ok){
-                toast.success("Post creado correctamente")
+                toast.success("Posteo editado correctamente")
                 resetForm()
                 if(user.role === 'user'){
                     setTimeout(()=>navigate('/homeinside'),2000)
@@ -39,12 +35,11 @@ const NewPost =()=>{
                 setTimeout(()=>navigate('/homeinsideadminmod'),2000)
                 }
             }else{
-                toast.error("Hubo un errore")
+                toast.error("HUbo un error")
             }
-        }catch (error) {
+        }catch(error){
             toast.error("Hubo un error en el sevidor")
         }
-        
     }
     return(
         <div >
@@ -84,5 +79,6 @@ const NewPost =()=>{
 
             </Formik>
         </div>
-    )}
-export default NewPost
+    )
+}
+export default EditPost

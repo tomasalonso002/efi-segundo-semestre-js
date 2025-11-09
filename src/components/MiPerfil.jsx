@@ -5,7 +5,8 @@ import { toast } from "react-toastify"
 import { AuthContext } from "../Context/AuthContext";
 import DeletePost from "./DeletePost";
 import "../style/Post.css"
-
+import PostComments from "./PostComments";
+import NewComment from "./NewComment";
 const MiPerfil = () => {
     const navigate = useNavigate()
     const [posts, setPosts] = useState([])
@@ -26,6 +27,8 @@ const MiPerfil = () => {
             toast.error(error)
         }
     }
+
+
 
     useEffect(()=>{
         if(user){
@@ -64,8 +67,12 @@ return(
                     <p>{p.category.type_category}</p>
                     <div className="button-post-conteiner">
                         <Button label="Eliminar" severity="danger" onClick={() => handleDelete(p.id)}/>
+                    
                         <Button className="button" type="submit" label="Editar"/>
                     </div>
+
+                    <PostComments postId={p.id} token={token} />
+                    <NewComment id={p.id}/>
                 </div>
             ))}
             </ul>

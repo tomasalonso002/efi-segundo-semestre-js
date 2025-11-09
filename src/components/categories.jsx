@@ -41,7 +41,7 @@ const NewCategory = () => {
     const fetchCategories = async() => {
         try {
             const res = await fetch('http://127.0.0.1:5000/categories',{
-            method:'GET',
+            method:'GET', 
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -102,7 +102,6 @@ const NewCategory = () => {
                             {user?.role === "admin" && (
                             <div> 
                                 <Button label="Eliminar" severity="danger" onClick={() => handleDelete(c.id)}/>
-                                <Button label="Editar"  />
                             </div>
                             )}
                         </li>

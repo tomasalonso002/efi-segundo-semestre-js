@@ -58,6 +58,7 @@ return(
             <ul>
                {[...posts]?.reverse().map((p)=>(
                 <div className="post-container">
+                    <h2>{p.autor.name}</h2>
                     <h2>{p.title}</h2>
                     <p>{p.content}</p>
                     <p>{p.created_at}</p>

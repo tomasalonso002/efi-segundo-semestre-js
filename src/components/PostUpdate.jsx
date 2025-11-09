@@ -46,13 +46,12 @@ const EditPost = ()=>{
              <Button className="post-form-button" type="button" label="volver" onClick={() => (user.role === 'user' ? navigate('/homeinside') : navigate('/homeinsideadminmod') )} />
             
             <Formik
-                initialValues={{title:"", content: "", category_id:""}}
+                initialValues={{title:"", contwent: "", category_id:""}}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
                 {({isSubmitting, values, setFieldValue})=>(
                     <Form >
-                        
                         <div className="container-form">
                             <h2>Crear un posteo</h2>
                             <div className="post-form">
